@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const Loading = styled.div`
   color: #fff;
@@ -96,3 +96,104 @@ export const IssueList = styled.ul`
     }
   }
 `;
+export const Loader = styled.img`
+  margin: 10px auto;
+  display: flex;
+  transition: 0.5s ease-out;
+  width: 73.5%;
+`;
+export const FilterIssues = styled.div`
+  max-width: 320px;
+  margin: 20px auto;
+
+  > img {
+    margin: 20px auto;
+    display: flex;
+    flex: 1;
+  }
+  button {
+    width: 100px;
+    padding: 15px 20px;
+    box-sizing: border-box;
+    background-color: #7159c1;
+    color: #fff;
+    border-radius: 5px;
+    border: none;
+    font-weight: 700;
+    cursor: pointer;
+
+    ${props =>
+      props.selected === 'all' &&
+      css`
+        &:nth-of-type(1) {
+          border: 2px solid red;
+        }
+      `}
+
+    ${props =>
+      props.selected === 'open' &&
+      css`
+        &:nth-of-type(2) {
+          border: 2px solid red;
+        }
+      `}
+
+      ${props =>
+        props.selected === 'closed' &&
+        css`
+          &:nth-of-type(3) {
+            border: 2px solid red;
+          }
+        `}
+    & + button {
+      margin-left: 10px;
+    }
+  }
+`;
+
+export const Pages = styled.div`
+  list-style: none;
+  display: flex;
+  margin: 20px auto;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  button {
+    padding: 20px;
+    color: #fff;
+    background-color: #7159c1;
+    box-sizing: border-box;
+    border-radius: 4px;
+    cursor: pointer;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+    border: none;
+    ${props =>
+      props.pageCount === 1 &&
+      css`
+        &:nth-of-type(1) {
+          cursor: not-allowed;
+          opacity: 0.5;
+          pointer-events: none;
+        }
+      `}
+    & + button {
+      margin-left: 10px;
+    }
+  }
+  span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    color: #fff;
+    background-color: #7159c1;
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+    box-sizing: border-box;
+    margin: 0 20px;
+    font-weight: 700;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+  }
+`;
+export const PageItem = styled.li``;

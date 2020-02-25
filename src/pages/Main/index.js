@@ -11,6 +11,7 @@ export default class Main extends Component {
   state = {
     newRepo: '',
     repos: [],
+    error: false,
     loading: false
   };
 
@@ -36,8 +37,12 @@ export default class Main extends Component {
     e.preventDefault();
     this.setState({ loading: true });
     const { newRepo, repos } = this.state;
-    const response = await api.get(`/repos/${newRepo}`);
-    if (response.status === 200) {
+    const exists = repos.some(repo => repo.name === newRepo);
+
+    try {
+      if (exists) throw new Error('Repositório duplicado');
+      const response = await api.get(`/repos/${newRepo}`);
+
       const data = {
         name: response.data.full_name
       };
@@ -45,13 +50,22 @@ export default class Main extends Component {
       this.setState({
         repos: [...repos, data],
         newRepo: '',
+        error: false
+      });
+    } catch (error) {
+      console.log('error:', error);
+      this.setState({
+        error: true
+      });
+    } finally {
+      this.setState({
         loading: false
       });
     }
   };
 
   render() {
-    const { newRepo, loading, repos } = this.state;
+    const { newRepo, loading, repos, error } = this.state;
     return (
       <Container>
         <h1>
@@ -59,7 +73,7 @@ export default class Main extends Component {
           Repositórios
         </h1>
 
-        <Form onSubmit={this.handleSubmit}>
+        <Form onSubmit={this.handleSubmit} error={error}>
           <input
             type="text"
             placeholder="Adicionar Repositório"
